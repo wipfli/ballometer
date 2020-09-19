@@ -53,7 +53,7 @@ def test_get_checksum_rootfs():
     '''
     u = update.Update()
     checksum = u._get_checksum_rootfs(passive_partition='/dev/mmcblk0p3')
-    assert checksum == '...'
+    assert checksum == '9b987e4275346ca30de0ae331b3eabbf50282298411fa427dc2f8ba0'
     
 def test_get_checksum_boot():
     '''
@@ -61,7 +61,7 @@ def test_get_checksum_boot():
     '''
     u = update.Update()
     checksum = u._get_checksum_boot(passive_partition='/dev/mmcblk0p3')
-    assert checksum == '...'
+    assert checksum == '33fe2ae764566a2f6988ae2cbaf89e335efd884d9e4b914f03da5a73'
     
 def test_flash_boot_select():
     '''
