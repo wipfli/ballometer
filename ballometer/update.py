@@ -4,6 +4,9 @@ import subprocess
 import time
 
 
+request_timeout = 30
+
+
 class UpdateError(Exception):
     pass
 
@@ -23,7 +26,7 @@ def get_releases():
 
     url = 'https://api.github.com/repos/wipfli/buildroot/releases'
     try:
-        r = requests.get(url, timeout=10)
+        r = requests.get(url, timeout=request_timeout)
     except requests.exceptions.Timeout:
         raise UpdateError('Timout')
     except requests.exceptions.ConnectionError:
@@ -117,7 +120,7 @@ def _get_total_size(release='v1.0.0'):
     url = 'https://github.com/wipfli/buildroot/releases/download/' + \
         release + '/rootfs.ext2.xz'
     try:
-        r = requests.get(url, stream=True, timeout=10)
+        r = requests.get(url, stream=True, timeout=request_timeout)
     except requests.exceptions.Timeout:
         raise UpdateError('Timout')
     except requests.exceptions.ConnectionError:
@@ -133,7 +136,7 @@ def _download_checksums(release='v1.0.0'):
     url = 'https://github.com/wipfli/buildroot/releases/download/' + \
         release + '/checksums.json'
     try:
-        r = requests.get(url, timeout=10)
+        r = requests.get(url, timeout=request_timeout)
     except requests.exceptions.Timeout:
         raise UpdateError('Timout')
     except requests.exceptions.ConnectionError:
@@ -155,7 +158,7 @@ def _download_rootfs(
     try:
         url = 'https://github.com/wipfli/buildroot/releases/download/' + \
             release + '/rootfs.ext2.xz'
-        r = requests.get(url, stream=True, timeout=10)
+        r = requests.get(url, stream=True, timeout=request_timeout)
 
         r.raise_for_status()
         chunk_i = 0
@@ -199,7 +202,7 @@ def _download_boot(release='v1.0.0', passive_partition='/dev/mmcblk0p3'):
     try:
         url = 'https://github.com/wipfli/buildroot/releases/download/' + \
             release + '/boot.tar.xz'
-        r = requests.get(url, stream=True, timeout=10)
+        r = requests.get(url, stream=True, timeout=request_timeout)
 
         r.raise_for_status()
 
